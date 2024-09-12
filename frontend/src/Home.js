@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 function Home() {
     // State to manage the input value and the list of tasks
     const [taskInput, setTaskInput] = useState('');
