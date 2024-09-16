@@ -92,34 +92,4 @@ button hover {
   background-color: #4cae4c;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  margin-top: 5px;
-  border-radius: 5px;
-  text-align: center; /* Center the text and buttons */
-}
-
-li div {
-  margin-top: 10px; /* Add space between task and buttons */
-}
-
-li button {
-  background-color: #d9534f;
-  border: none;
-  color: white;
-  border-radius: 3px;
-  cursor: pointer;
-  width: 48%; /* Set width to make buttons fit side by side */
-  margin: 0 1%; /* Space between buttons */
-}
-
-li button:hover {
-  background-color: #c9302c;
-}
+/*# sourceMappingURL=App.css.map */
