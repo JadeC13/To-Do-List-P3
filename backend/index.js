@@ -32,6 +32,9 @@ app.get('/', (req, res) => {
     res.render('../frontend/src/Home.js')
 })
 
+app.get('*', (req, res) => {
+    res.status(404).send('<h1>404 Page</h1>')
+})
 
 // listen for connections 
 app.listen(process.env.PORT, () => {
