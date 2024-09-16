@@ -20,15 +20,12 @@ const Login = () => {
 
         // Reset error on successful submission
         setError('');
-
-        // Redirect or show success message
-        // e.g., history.push('/dashboard');
     };
 
     return (
         <div className="login-container">
             <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
+            <form method="POST" action="/Login" onSubmit={handleSubmit}>
                 {error && <p className="error-message">{error}</p>}
                 <div className="form-group">
                     <label htmlFor="email">Email:</label>
