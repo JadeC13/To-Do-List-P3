@@ -5,6 +5,7 @@ import Home from './Home';
 import Navigation from './Navigation';
 import Login from './users/LoginForm';
 import Users from './users/UserList';
+import Signup from '../public/signup.html';
 
 const App = () => {
 
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Login" element={<Login />} />
         <Route exact path="/Users" element={<Users />} />
+        <Route exact path="/Signup" element={<Signup />} />
       </Routes>
     </BrowserRouter>
   );

@@ -9,7 +9,7 @@ function Navigation() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/Login">Login</Link></li>
                 <li><Link to="/Users">Users</Link></li>
-                <li>Sign Up</li>
+                <li><Link to="/frontend/public/signup.html">Sign Up</Link></li>
             </ul>
         </nav>
     )
