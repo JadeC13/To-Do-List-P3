@@ -19,22 +19,24 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 //controllers and routes
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
 
-app.use('/users', require('./controllers/users') )
+app.use('/users', require('./controllers/users'));
 
 app.get('/', (req, res) => {
     res.render('../frontend/src/Home.js')
 })
 
-app.get('*', (req, res) => {
-    res.status(404).send('<h1>404 Page</h1>')
-})
+
+
+// app.get('*', (req, res) => {
+//     res.status(404).send('<h1>404 Page</h1>')
+// })
 
 // listen for connections 
 app.listen(process.env.PORT, () => {
