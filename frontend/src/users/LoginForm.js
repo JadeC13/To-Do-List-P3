@@ -24,7 +24,7 @@ const Login = () => {
 
     return (
         <div className="login-container">
-            <h2>Login</h2>
+            <h2>Sign in</h2>
             <form method="POST" action="/Login" onSubmit={handleSubmit}>
                 {error && <p className="error-message">{error}</p>}
                 <div className="form-group">
@@ -47,7 +47,7 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button  type="submit" class="login-button">Login</button>
             </form>
         </div>
     );
