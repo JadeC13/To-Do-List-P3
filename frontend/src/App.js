@@ -1,4 +1,4 @@
-import './css/App.css'
+// import './css/App.css'
 import React, { useEffect, useState }from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Home';
