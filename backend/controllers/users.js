@@ -1,6 +1,27 @@
+// const router = require('express').Router()
+// const db = require('../models')
+
+// router.post('/Login', (req, res) => {
+//     const { email, password } = req.body;
+
+//     if (!email || !password) {
+//         return res.status(400).json({ message: 'Email and password are required' });
+//     }
+
+//     db.Users.create(req.body)
+//         .then(() => {
+//             res.redirect('/Home');
+//         })
+//         .catch((error) => {
+//             console.error('Database error:', error); // Log the error to the console
+//             res.status(500).json({ message: 'Internal Server Error' }); // Send an error response to the client
+//         });
+// });
+
+// module.exports = router;
+
 const router = require('express').Router()
 const db = require('../models')
-
 const bcrypt = require('bcrypt'); // Add bcrypt for password hashing
 
 //Login
@@ -41,6 +62,7 @@ router.post('/Signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new db.Users({ email, password: hashedPassword });
         await newUser.save();
+        res.status(201).send('User Registered');
 
         res.redirect('/Home');
     } catch (error) {
@@ -65,20 +87,3 @@ router.get('/test', (req, res) => {
 });
 
 module.exports = router;
-
-// router.post('/Login', (req, res) => {
-//     const { email, password } = req.body;
-
-//     if (!email || !password) {
-//         return res.status(400).json({ message: 'Email and password are required' });
-//     }
-
-//     db.Users.create(req.body)
-//         .then(() => {
-//             res.redirect('/Home');
-//         })
-//         .catch((error) => {
-//             console.error('Database error:', error); // Log the error to the console
-//             res.status(500).json({ message: 'Internal Server Error' }); // Send an error response to the client
-//         });
-// });
