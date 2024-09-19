@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -17,8 +17,7 @@ const Login = () => {
 
         try {
             const response = await axios.post('/api/auth/login', { email, password });
-            // Assuming the token is sent back from the backend
-            localStorage.setItem('auth-token', response.data.token); 
+            localStorage.setItem('auth-token', response.data.token);
             setError('');
             navigate('/home'); // Redirect to Home page
         } catch (err) {
@@ -27,7 +26,7 @@ const Login = () => {
     };
 
     return (
-        <div className="login-container">
+        <div className="form-container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 {error && <p className="error-message">{error}</p>}
@@ -51,14 +50,13 @@ const Login = () => {
                         required
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button type="submit" className="form-button">Login</button>
             </form>
         </div>
     );
 };
 
-export default Login
-
+export default Login;
 
 
 
