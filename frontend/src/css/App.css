@@ -108,56 +108,60 @@ button:hover {
   background-color: #4cae4c;
 }
 
-.login-container {
+
+/* Common container styles for Signup and Login forms */
+.form-container {
   width: 400px;
-  
   padding: 40px;
-  /* Increase padding for more space inside the container */
   background-color: white;
   border-radius: 8px;
-  /* Slightly larger border-radius for a modern look */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  /* Adjust box shadow for a more pronounced effect */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-.login-container h2 {
+.form-container h2 {
   margin-bottom: 20px;
-  /* Space below the h2 */
   font-size: 24px;
-  /* Increase font size for the heading */
+  text-align: left;
+  /* Align text to the left */
+  color: black;
+  /* Optional: Set text color if needed */
 }
 
 .form-group {
   margin-bottom: 20px;
-  /* Add margin below each form group */
 }
 
 input[type=email],
 input[type=password] {
   width: calc(100% - 20px);
-  /* Adjust width to account for padding */
   padding: 12px;
-  /* Increase padding for a better input field */
   border: 1px solid #ddd;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.login-button {
+.form-button {
   width: 100%;
-  /* Ensure button takes full width of the container */
   padding: 12px;
-  /* Increase padding for the button */
   background-color: #5c87b8;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 20px;
- 
   font-size: 16px;
-  /* Increase font size for better readability */
+}
+
+.form-button:hover {
+  background-color: #4cae4c;
+}
+
+/* Error message style for Login */
+.error-message {
+  color: #d9534f;
+  margin-bottom: 20px;
 }
