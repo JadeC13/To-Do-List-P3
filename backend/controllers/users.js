@@ -52,24 +52,29 @@ router.post('/Login', async (req, res) => {
 
 //Sign up
 router.post('/Signup', async (req, res) => {
-    const { email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Email and password are required' });
+    if (!firstName || !lastName || !email || !password) {
+        return res.status(400).json({ message: 'All fields are required' });
     }
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new db.Users({ email, password: hashedPassword });
+        
+        // Save the hashed password in the `password` field
+        const newUser = new db.Users({ firstName, lastName, email, password: hashedPassword });
+        
         await newUser.save();
         res.status(201).send('User Registered');
 
+        // Optionally redirect after successful signup
         res.redirect('/Home');
     } catch (error) {
         console.error('Database error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
 
 router.get('/all', async (req, res) => {
     try {
