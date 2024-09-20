@@ -16,7 +16,8 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post('/api/auth/login', { email, password });
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}users/signup`, { email, password });
+            //getting an error on line 19 on grabbing the email and password from the database
             localStorage.setItem('auth-token', response.data.token);
             setError('');
             navigate('/home'); // Redirect to Home page
