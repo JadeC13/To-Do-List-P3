@@ -43,7 +43,6 @@ router.post('/Login', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        res.redirect('/Home');
     } catch (error) {
         console.error('Database error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -66,9 +65,7 @@ router.post('/Signup', async (req, res) => {
         
         await newUser.save();
         res.status(201).send('User Registered');
-
-        // Optionally redirect after successful signup
-        res.redirect('/Home');
+        
     } catch (error) {
         console.error('Database error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
