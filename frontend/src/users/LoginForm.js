@@ -14,16 +14,18 @@ const Login = () => {
             setError('Please enter both email and password.');
             return;
         }
-
+    
         try {
-            const response = await axios.post('/api/auth/login', { email, password });
-            localStorage.setItem('auth-token', response.data.token);
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, { email, password });
+            // Correct method: axios.post, and sending email and password in the request body
+            localStorage.setItem('auth-token', response.data.token); // Assuming the backend sends a token
             setError('');
             navigate('/home'); // Redirect to Home page
         } catch (err) {
             setError('Login failed. Please check your credentials.');
         }
     };
+    
 
     return (
         <div className="form-container">
