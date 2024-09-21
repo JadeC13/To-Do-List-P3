@@ -9,6 +9,7 @@ const cors = require('cors')
 const methodOverride = require ('method-override')
 const app = express()
 const defineCurrentUser = require('./middleware/defineCurrentUser')
+const path = require('path')
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true})
 
@@ -23,6 +24,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(defineCurrentUser)
 app.use(cors())
+// serve static front end in production mode
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+}
+
 
 app.use(express.json());
 

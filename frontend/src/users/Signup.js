@@ -14,7 +14,7 @@ const Signup = () => {
 
         // Log form data before sending (from main branch)
         console.log({ firstName, lastName, email, password });
-    
+
         if (!firstName || !lastName || !email || !password) {
             alert("All fields are required");
             return;
