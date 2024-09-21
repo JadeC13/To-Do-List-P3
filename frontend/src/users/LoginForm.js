@@ -17,10 +17,11 @@ const Login = () => {
     
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, { email, password });
+            console.log('success')
             // Correct method: axios.post, and sending email and password in the request body
             localStorage.setItem('auth-token', response.data.token); // Assuming the backend sends a token
-            setError('');
-            navigate('/home'); // Redirect to Home page
+            
+            navigate('/'); // Redirect to Home page
         } catch (err) {
             setError('Login failed. Please check your credentials.');
         }
