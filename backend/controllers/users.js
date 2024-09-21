@@ -20,11 +20,12 @@
 
 // module.exports = router;
 
-const router = require('express').Router()
-const db = require('../models')
+const router = require('express').Router();
+const db = require('../models');
 const bcrypt = require('bcrypt'); // Add bcrypt for password hashing
+const jwt = require('jsonwebtoken');
 
-//Login
+// Login
 router.post('/Login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -33,21 +34,36 @@ router.post('/Login', async (req, res) => {
     }
 
     try {
+        // Find the user by email
         const user = await db.Users.findOne({ email });
         if (!user) {
+            console.log(email);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
+        // Compare the provided password with the stored hashed password
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
+            console.log(password);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
+        // If password is correct, generate a JWT token
+        const token = jwt.sign(
+            { userId: user._id }, // Payload: user ID
+            'theSecretKey',      // Secret key
+            { expiresIn: '1h' }   // Token expiry time
+        );
+
+        // Send the token to the client
+        res.status(200).json({ token });
+        
     } catch (error) {
         console.error('Database error:', error);
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
 
 //Sign up
 router.post('/Signup', async (req, res) => {
