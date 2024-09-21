@@ -15,13 +15,13 @@ const Signup = () => {
         // Log form data before sending (from main branch)
         console.log({ firstName, lastName, email, password });
 
-        if (!firstName  !lastName  !email || !password) {
+        if (!firstName || !lastName || !email || !password) {
             alert("All fields are required");
             return;
         }
 
         try {
-            await axios.post(${process.env.REACT_APP_SERVER_URL}users/signup, { firstName, lastName, email, password });
+            await axios.post(`${process.env.REACT_APP_SERVER_URL}users/signup`, { firstName, lastName, email, password });
             alert('Signup successful');
             navigate('/login');
         } catch (err) {
