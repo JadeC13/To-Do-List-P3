@@ -1,58 +1,57 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 
 function Home() {
     // State to manage the input value, the list of tasks, and the index of the task being edited
+    const [standaloneTasksInput, setStandaloneTasksInput] = useState('');
     const [taskInput, setTaskInput] = useState('');
+    const [folderTaskInput, setFolderTaskInput] = useState('');
     const [folderInput, setFolderInput] = useState('');
-    const [editIndex, setEditIndex] = useState(null); // To track which task is being edited
+    const [editIndex, setEditIndex] = useState(null);
     const [folders, setFolders] = useState([]);
     const [standaloneTasks, setStandaloneTasks] = useState([]);
 
+    const taskListRef = useRef(null);
+
     // Handler for adding a new task or editing an existing task
     const handleAddOrEditTaskinFolder = (folderIndex) => {
-        if (taskInput.trim()) {
+        if (folderTaskInput.trim()) {
             const updatedFolders = [...folders];
             if (editIndex !== null) {
                 // Editing an existing task
-                const updatedTasks = updatedFolders[folderIndex].task.map((task, index) =>
-                    index === editIndex ? taskInput : task
-                );
-                updatedFolders[folderIndex].tasks = updatedTasks;
+                updatedFolders[folderIndex].tasks[editIndex] = folderTaskInput;
                 setEditIndex(null); // Reset edit index
             } else {
                 // Adding a new task
-                updatedFolders[folderIndex].tasks.push(taskInput);
+                updatedFolders[folderIndex].tasks.push(folderTaskInput);
             }
             setFolders(updatedFolders);
-            setTaskInput(''); // Clear input field
+            setFolderTaskInput(''); // Clear input field
         } else {
             alert('Please enter a task!');
         }
     };
     //Handler for adding a new standalone task or editing an existing one
     const handleAddOrEditStandaloneTask = () => {
-        if (taskInput.trim()) {
+        if (standaloneTasksInput.trim()) {
             if (editIndex !== null) {
                 //Editing an existing standalone task
-                const updatedTasks = standaloneTasks.map((task, index) =>
-                    index === editIndex ? taskInput : task
-                );
-                setStandaloneTasks(updatedTasks);
+                standaloneTasks[editIndex] = standaloneTasksInput;
                 setEditIndex(null); //Reset edit index
             } else {
                 //Adding a new standalone task
-                setStandaloneTasks([...standaloneTasks, taskInput]);;
+                setStandaloneTasks([...standaloneTasks, standaloneTasksInput]);
             }
-            setTaskInput(''); //Clear input field
+            setStandaloneTasksInput(''); //Clear input field
         } else {
             alert('Please enter a task!')
         }
     };
+
     const handleCreateFolder = () => {
         if (folderInput.trim()) {
             setFolders([...folders, { name: folderInput, tasks: [] }]); //Each folder has it's own tasks
-            setFolderInput('');
+            setFolderInput(''); // Clear folder inpu
         } else {
             alert('Please enter a folder name!')
         }
@@ -72,31 +71,36 @@ function Home() {
 
     // Handler for editing a task
     const handleEditTask = (folderIndex, taskIndex) => {
-        setTaskInput(folders[folderIndex]); // Set the input to the task's current value
+        setFolderTaskInput(folders[folderIndex]); // Set the input to the task's current value
         setEditIndex(taskIndex); // Set the edit index to the current task's index
     };
 
+    const handleEditStandaloneTask = (index) => {
+        setStandaloneTasksInput(standaloneTasks[index]);
+        setEditIndex(index);
+    };
+
     return (
-        <div className="container">
+        <div className="container" style={{ overflowY: 'auto'}}>
             <h1>MY TO-DO LIST</h1>
 
             <h2>Tasks</h2>
             <input
                 type="text"
-                value={taskInput}
-                onChange={(e) => setTaskInput(e.target.value)}
+                value={standaloneTasksInput}
+                onChange={(e) => setStandaloneTasksInput(e.target.value)}
                 placeholder="Add or edit a task"
             />
             <button onClick={handleAddOrEditStandaloneTask}>
                 {editIndex !== null ? 'Update Task' : 'Add Task'}
             </button>
-            <ul>
+            <ul ref={taskListRef}>
                 {standaloneTasks.map((task, index) => (
                     <li key={index} style={{ textAlign: 'center' }}>
                         <div>{task}</div>
                         {/* // Buttons for edit and Delete for the Standalone Tasks */}
                         <div style={{ marginTop: '10px' }}>
-                            <button onClick={() => { setTaskInput(task); setEditIndex(index); }}>Edit</button>
+                            <button onClick={() => handleEditStandaloneTask(index)}>Edit</button>
                             <button onClick={() => handleDeleteStandaloneTask(index)}>Delete</button>
                         </div>
                     </li>
@@ -118,8 +122,8 @@ function Home() {
                     <h2>{folder.name}</h2>
                     <input
                         type="text"
-                        value={taskInput}
-                        onChange={(e) => setTaskInput(e.target.value)}
+                        value={folderTaskInput}
+                        onChange={(e) => setFolderTaskInput(e.target.value)}
                         placeholder="Add or edit a task"
                     />
 
