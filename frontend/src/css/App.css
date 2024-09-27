@@ -177,3 +177,24 @@ input[type="password"] {
   color: #d9534f;
   margin-bottom: 20px;
 }
+.container {
+  position: auto; /* To position the scrollbar */
+  height: 800px; /* Adjust as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+  width: 300px; /* Adjust as needed */
+}
+
+.container::-webkit-scrollbar {
+  width: 10px; /* Adjust scrollbar width */
+  position: absolute; /* Position the scrollbar to the right */
+  right: 0; /* Align to the right edge */
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Track background color */
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb background color */
+  border-radius: 10px; /* Round the corners */
+}
