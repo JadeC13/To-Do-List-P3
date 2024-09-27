@@ -6,7 +6,7 @@ A web-based To-Do List application designed to help users manage tasks efficient
 
 ## Demo
 
-Explore the live demo of To-Do-List  at (Will be deployable link added later)
+Explore the live demo of To-Do-List  at To-Do-List-Manager-env.eba-2awyixyn.us-east-1.elasticbeanstalk.com 
 
 ## Technologies Used
 
