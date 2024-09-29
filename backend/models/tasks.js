@@ -1,0 +1,36 @@
+const mongoose = require('mongoose');
+
+// Task Schema
+const taskSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    folder: {
+        type: Schema.Types.ObjectId,
+        ref: 'Folder',
+        required: true
+    },
+});
+
+// Folder Schema
+const folderSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    tasks: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Task'
+    }],
+});
+
+// Register models with Mongoose
+const Task = mongoose.model('Task', taskSchema);
+const Folder = mongoose.model('Folder', folderSchema);
+
+module.exports = { Task, Folder };
