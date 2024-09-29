@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
 
-function Users() {
+// function Users() {
 
-    const [backendData, setBackendData] = useState([{}])
+//     const [backendData, setBackendData] = useState([{}])
 
-    useEffect(() => {
-        fetch("/api").then(
-            response => response.json()
-        ).then(
-            data => {
-                setBackendData(data)
-            }
-        )
-    }, [])
+//     useEffect(() => {
+//         fetch("/api").then(
+//             response => response.json()
+//         ).then(
+//             data => {
+//                 setBackendData(data)
+//             }
+//         )
+//     }, [])
 
-    return (
-        <div>
-            {(typeof backendData.users === 'undefined') ? (
-                <p>Loading..</p>
-            ) : (
-                backendData.users.map((user, i) => (
-                    <p key={i}>{user}</p>
-                ))
-            )}
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             {(typeof backendData.users === 'undefined') ? (
+//                 <p>Loading..</p>
+//             ) : (
+//                 backendData.users.map((user, i) => (
+//                     <p key={i}>{user}</p>
+//                 ))
+//             )}
+//         </div>
+//     )
+// }
 
-export default Users;
+// export default Users;
