@@ -19,8 +19,12 @@ const Login = () => {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, { email, password });
             console.log('success')
             // Correct method: axios.post, and sending email and password in the request body
-            localStorage.setItem('auth-token', response.data.token); // Assuming the backend sends a token
-            
+            localStorage.setItem('authtoken', response.data.token); // Assuming the backend sends a token
+
+            //parse token for tasks with current user to be able to keep it tied to said user (parsed into backend to the tasks controller)
+            //for the task controller that looks up tasks by userId
+
+            console.log(response.data.token)
             navigate('/'); // Redirect to Home page
         } catch (err) {
             setError('Login failed. Please check your credentials.');
