@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt'); // Add bcrypt for password hashing
 const jwt = require('jsonwebtoken');
 
 // Login
-router.post('/Login', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -44,7 +44,7 @@ router.post('/Login', async (req, res) => {
 
 
 //Sign up
-router.post('/Signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
 
     if (!firstName || !lastName || !email || !password) {
@@ -83,3 +83,25 @@ router.get('/test', (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+// router.get('/me', passport.authenticate('jwt', { session: false }), async (req, res) => {
+//     try {
+//       const user = await User.findById(req.user.id).select('-password');
+//       if (!user) {
+//         return res.status(404).json({ message: 'User not found' });
+//       }
+//       res.json({
+//         username: user.username,
+//         birdColor: user.birdColor,
+//       });
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(500).send('Server error');
+//     }
+//   });

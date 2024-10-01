@@ -21,7 +21,7 @@ const Login = () => {
             // Correct method: axios.post, and sending email and password in the request body
             localStorage.setItem('auth-token', response.data.token); // Assuming the backend sends a token
             
-            navigate('/'); // Redirect to Home page
+            navigate('/tasks'); // Redirect to task page
         } catch (err) {
             setError('Login failed. Please check your credentials.');
         }

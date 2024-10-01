@@ -23,8 +23,16 @@ app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(defineCurrentUser)
-app.use(cors())
-// serve static front end in production mode
+app.use(
+    cors({
+        origin: "https://localhost:3000/", 
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
+
+
+
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, 'client', 'build')));
 }
@@ -42,6 +50,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/users', require('./controllers/users'))
+app.use('/tasks', require('./controllers/tasks'))
 app.use('/authentication', require('./controllers/authentication'))
 
 app.get('/', (req, res) => {
