@@ -11,7 +11,7 @@ const taskSchema = new mongoose.Schema({
         required: true
     },
     folder: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Folder',
         required: true
     },
@@ -24,7 +24,7 @@ const folderSchema = new mongoose.Schema({
         required: true
     },
     tasks: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Task'
     }],
 });

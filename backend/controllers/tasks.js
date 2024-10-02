@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models');
 
 // Create a new task
-router.post('/Tasks', async (req, res) => {
+router.post('/tasks', async (req, res) => {
     const { title, description, folder } = req.body;
 
     try {
@@ -34,6 +34,8 @@ router.put('/folders/:folderId', taskController.updateFolderTasks);
 // Route to delete a task within a folder
 router.delete('/folders/:folderId/tasks/:taskId', taskController.deleteFolderTask);
 
+module.exports = router;
+
 
 // // Add more routes as needed, for example, to get tasks
 // router.get('/Tasks', async (req, res) => {
@@ -44,8 +46,6 @@ router.delete('/folders/:folderId/tasks/:taskId', taskController.deleteFolderTas
 //         res.status(500).json({ message: 'Failed to retrieve tasks', error: error.message });
 //     }
 // });
-
-module.exports = router;
 
 
 // const db = require('../models');
