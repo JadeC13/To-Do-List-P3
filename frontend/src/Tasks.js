@@ -50,18 +50,41 @@ function Tasks() {
 
     // Handle deleting a task within a folder
     const handleDeleteTask = async (folderIndex, taskIndex) => {
+        // Check if folders and the requested folder exist
+        if (!folders || !folders[folderIndex]) {
+            console.error("Folder not found at the specified index");
+            return;
+        }
+
         const folder = folders[folderIndex];
+        
+        // Check if the task exists
+        if (!folder.tasks || !folder.tasks[taskIndex]) {
+            console.error("Task not found at the specified index");
+            return;
+        }
+    
         const taskToDelete = folder.tasks[taskIndex];
-
+    
+        // Clone folders array to avoid direct mutation
         const updatedFolders = [...folders];
+        
+        // Safely update the tasks for the specified folder
         updatedFolders[folderIndex].tasks = folder.tasks.filter((_, index) => index !== taskIndex);
+    
+        // Update the state with the modified folders array
         setFolders(updatedFolders);
-
-        // Send delete request to the backend
-        await axios.delete(`${process.env.REACT_APP_SERVER_URL}folders/${folder._id}/tasks/${taskToDelete._id}`, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+    
+        // Send delete request to the backend (with proper error handling)
+        try {
+            await axios.delete(`${process.env.REACT_APP_SERVER_URL}folders/${folder._id}/tasks/${taskToDelete._id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        } catch (error) {
+            console.error("Error deleting task:", error);
+        }
     };
+
 
     const handleAddOrEditStandaloneTask = async () => {
         if (taskInput.trim()) {
