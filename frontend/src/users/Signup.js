@@ -70,5 +70,5 @@ const Signup = () => {
         </div>
     );
 };
-
+// solving merge conflict
 export default Signup;
