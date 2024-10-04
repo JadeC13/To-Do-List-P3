@@ -1,54 +1,4 @@
-.homeDiv {
-  margin-top: 5em;
-}
-
-
-nav {
-  width: 100%;
-  height: 4em; /* Ensure the height matches the content */
-  background-color: #5c87b8;
-  display: flex;
-  align-items: center; /* Vertically center the content */
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-nav ul {
-  display: flex;
-  flex-direction: row;
-  align-items: center; /* Center the items in the navbar */
-  justify-content: space-around;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-nav ul li {
-  padding: 0.5em 1em;
-  border-radius: 8px;
-  background-color: rgba(107, 161, 255,) ;
-  transition: background-color 0.3s ease;
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-nav ul li:hover {
-  background-color: #4cae4c;
-  /* Smooth hover effect */
-}
-
-nav ul li a {
-  display: block;
-  text-align: center;
-  padding: 0.5em 0;
-  text-decoration: none;
-  color: white;
-}
-
+/* General styling */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -57,59 +7,9 @@ body {
   width: 100%;
 }
 
-.container {
-  width: 300px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  /* Or use 'fixed' if needed */
-  top: 50%;
-  /* Center vertically */
-  left: 50%;
-  /* Center horizontally */
-  transform: translate(-50%, -50%);
-  /* Center container */
-}
-
-.container ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.container li {
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  margin-top: 5px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.container li button {
-  background-color: #d9534f;
-  border: none;
-  color: white;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.container li button:hover {
-  background-color: #4cae4c;
-}
-
 h1 {
   text-align: center;
   color: black;
-}
-
-input[type=text] {
-  width: calc(100% - 22px);
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
 button {
@@ -126,8 +26,54 @@ button:hover {
   background-color: #4cae4c;
 }
 
+/* Navbar styling */
+nav {
+  width: 100%;
+  height: 4em;
+  /* Set navbar height */
+  background-color: #5c87b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
-/* Common container styles for both Signup and Login forms */
+nav ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+nav ul li {
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  background-color: rgba(107, 161, 255);
+  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+nav ul li:hover {
+  background-color: #4cae4c;
+}
+
+nav ul li a {
+  display: block;
+  text-align: center;
+  padding: 0.5em 0;
+  text-decoration: none;
+  color: white;
+}
+
+/* Container for the form and tasks */
 .form-container {
   width: 400px;
   padding: 40px;
@@ -138,6 +84,102 @@ button:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  margin-top: 1.5em;
+  max-height: calc(100vh - 6em);
+  /* Ensure the box doesn't overlap with the navbar */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+}
+
+/* Scrollable container for tasks */
+.scroll-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 1.5em;
+  max-height: 60vh;
+  /* Limit height to ensure scrolling when content overflows */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+/* Homepage section styling */
+.homeDiv {
+  margin-top: 5em;
+}
+
+.home-page {
+  padding: 30px;
+  padding-top: 6em;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+}
+
+.section {
+  max-width: 800px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Error message style for Login */
+.error-message {
+  color: #d9534f;
+  margin-bottom: 20px;
+}
+
+.tasks-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 80%;
+  max-width: 800px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+}
+
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
 }
 
 .form-container h2 {
@@ -177,29 +219,36 @@ input[type="password"] {
   background-color: #4cae4c;
 }
 
-/* Error message style for Login */
-.error-message {
-  color: #d9534f;
-  margin-bottom: 20px;
-}
-.container {
-  position: auto; /* To position the scrollbar */
-  height: 800px; /* Adjust as needed */
-  overflow-y: auto; /* Enable vertical scrolling */
-  width: 300px; /* Adjust as needed */
-}
-
-.container::-webkit-scrollbar {
-  width: 10px; /* Adjust scrollbar width */
-  position: absolute; /* Position the scrollbar to the right */
-  right: 0; /* Align to the right edge */
+/* Task box styling */
+.task-box {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.container::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* Track background color */
+.task-box div {
+  flex-grow: 1;
 }
 
-.container::-webkit-scrollbar-thumb {
-  background-color: #888; /* Thumb background color */
-  border-radius: 10px; /* Round the corners */
+.task-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.task-buttons button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #5c87b8;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.task-buttons button:hover {
+  background-color: #4cae4c;
 }
