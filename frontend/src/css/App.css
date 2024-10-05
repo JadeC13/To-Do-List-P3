@@ -73,6 +73,14 @@ nav ul li a {
   color: white;
 }
 
+.logout {
+  display: block;
+  text-align: center;
+  padding: 1em 1em;
+  text-decoration: none;
+  color: white;
+}
+
 /* Container for the form and tasks */
 .form-container {
   width: 400px;
