@@ -1,96 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function Tasks() {
-    const [taskInput, setTaskInput] = useState(''); // Standalone task input
-    const [folderInput, setFolderInput] = useState(''); // Folder name input
-    const [folderTaskInputs, setFolderTaskInputs] = useState({}); // To track task inputs for each folder
-    const [folders, setFolders] = useState([]); // List of folders
-    const [standaloneTasks, setStandaloneTasks] = useState([]); // List of standalone tasks
-    const [editIndex, setEditIndex] = useState(null); // To track which task is being edited
-    const [folderEdit, setFolderEdit] = useState(null); // To track which folder's task is being edited
+    const [taskInput, setTaskInput] = useState('');
+    const [folderInput, setFolderInput] = useState('');
+    const [folderTaskInputs, setFolderTaskInputs] = useState({});
+    const [folders, setFolders] = useState([]);
+    const [standaloneTasks, setStandaloneTasks] = useState([]);
+    const [editIndex, setEditIndex] = useState(null);
+    const [folderEdit, setFolderEdit] = useState(null);
 
-    const token = localStorage.getItem('authtoken'); // Retrieve JWT token from local storage
-
+    // Fetch tasks and folders from local storage or initialize empty arrays
     useEffect(() => {
-        // Fetch tasks and folders from the backend
-        const fetchTasksAndFolders = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}tasks`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                setFolders(response.data.folders);
-                setStandaloneTasks(response.data.standaloneTasks);
-            } catch (err) {
-                console.error("Error fetching tasks and folders:", err);
-            }
-        };
-        fetchTasksAndFolders();
-    }, [token]);
+        const savedFolders = JSON.parse(localStorage.getItem('folders')) || [];
+        const savedTasks = JSON.parse(localStorage.getItem('standaloneTasks')) || [];
+        setFolders(savedFolders);
+        setStandaloneTasks(savedTasks);
+    }, []);
 
-    // Handle deleting a standalone task
-    const handleDeleteStandaloneTask = async (taskIndex) => {
-        const taskToDelete = standaloneTasks[taskIndex];
+    // Save folders and tasks to local storage whenever they change
+    useEffect(() => {
+        localStorage.setItem('folders', JSON.stringify(folders));
+        localStorage.setItem('standaloneTasks', JSON.stringify(standaloneTasks));
+    }, [folders, standaloneTasks]);
+
+    const handleDeleteStandaloneTask = (taskIndex) => {
         const updatedTasks = standaloneTasks.filter((_, index) => index !== taskIndex);
         setStandaloneTasks(updatedTasks);
-
-        // Send delete request to the backend
-        await axios.delete(`${process.env.REACT_APP_SERVER_URL}tasks/standalone/${taskToDelete._id}`, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
     };
 
-    // Handle editing a task within a folder
     const handleEditTask = (folderIndex, taskIndex) => {
         const task = folders[folderIndex].tasks[taskIndex];
         setFolderTaskInputs({ ...folderTaskInputs, [folderIndex]: task });
         setEditIndex(taskIndex);
-        setFolderEdit(folderIndex); // Track which folder is being edited
+        setFolderEdit(folderIndex);
     };
 
-    // Handle deleting a task within a folder
-    const handleDeleteTask = async (folderIndex, taskIndex) => {
-        const folder = folders[folderIndex];
-        const taskToDelete = folder.tasks[taskIndex];
-
+    const handleDeleteTask = (folderIndex, taskIndex) => {
         const updatedFolders = [...folders];
-        updatedFolders[folderIndex].tasks = folder.tasks.filter((_, index) => index !== taskIndex);
+        updatedFolders[folderIndex].tasks = updatedFolders[folderIndex].tasks.filter((_, index) => index !== taskIndex);
         setFolders(updatedFolders);
-
-        // Send delete request to the backend
-        await axios.delete(`${process.env.REACT_APP_SERVER_URL}folders/${folder._id}/tasks/${taskToDelete._id}`, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
     };
 
-    const handleAddOrEditStandaloneTask = async () => {
+    const handleAddOrEditStandaloneTask = () => {
         if (taskInput.trim()) {
             let updatedTasks;
             if (editIndex !== null) {
-                // Editing an existing standalone task
                 updatedTasks = standaloneTasks.map((task, index) =>
                     index === editIndex ? taskInput : task
                 );
             } else {
-                // Adding a new standalone task
                 updatedTasks = [...standaloneTasks, taskInput];
             }
             setStandaloneTasks(updatedTasks);
             setTaskInput('');
             setEditIndex(null);
-
-            // Send updated tasks to the backend
-            await axios.post(`${process.env.REACT_APP_SERVER_URL}tasks/standalone`, {
-                tasks: updatedTasks,
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            }); 
         } else {
             alert('Please enter a task!');
         }
     };
 
-    const handleAddOrEditTaskInFolder = async (folderIndex) => {
+    const handleAddOrEditTaskInFolder = (folderIndex) => {
         const folderTaskInput = folderTaskInputs[folderIndex] || '';
         if (folderTaskInput.trim()) {
             const updatedFolders = [...folders];
@@ -106,63 +75,51 @@ function Tasks() {
             setFolders(updatedFolders);
             setFolderTaskInputs({ ...folderTaskInputs, [folderIndex]: '' });
             setEditIndex(null);
-            setFolderEdit(null); // Reset folder edit tracking
-
-            // Send updated tasks to the backend
-            await axios.put(`${process.env.REACT_APP_SERVER_URL}folders/${updatedFolders[folderIndex]._id}`, {
-                tasks: updatedTasks
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            setFolderEdit(null);
         } else {
             alert('Please enter a task!');
         }
     };
 
-    const handleCreateFolder = async () => {
+    const handleCreateFolder = () => {
         if (folderInput.trim()) {
             const newFolder = { name: folderInput, tasks: [] };
             setFolders([...folders, newFolder]);
             setFolderInput('');
-
-            // Send the new folder to the backend
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}folders`, newFolder, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            // Update the folder list with the response from the backend
-            setFolders([...folders, response.data]);
         } else {
             alert('Please enter a folder name!');
         }
     };
 
     return (
-        <div className="container">
-            <h1>MY TO-DO LIST</h1>
+        <div className="form-container">
+            <div className="scroll-container">
+                <h1>MY TO-DO LIST</h1>
 
-            <h2>Standalone Tasks</h2>
-            <input
-                type="text"
-                value={taskInput}
-                onChange={(e) => setTaskInput(e.target.value)}
-                placeholder="Add or edit a standalone task"
-            />
-            <button onClick={handleAddOrEditStandaloneTask}>
-                {editIndex !== null && folderEdit === null ? 'Update Task' : 'Add Task'}
-            </button>
-            <ul>
-                {standaloneTasks.map((task, index) => (
-                    <li key={index} style={{ textAlign: 'center' }}>
-                        <div>{task}</div>
-                        <div style={{ marginTop: '10px' }}>
-                            <button onClick={() => { setTaskInput(task); setEditIndex(index); setFolderEdit(null); }}>Edit</button>
-                            <button onClick={() => handleDeleteStandaloneTask(index)}>Delete</button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
+                {/* Standalone Tasks */}
+                <h2>Standalone Tasks</h2>
+                <input
+                    type="text"
+                    value={taskInput}
+                    onChange={(e) => setTaskInput(e.target.value)}
+                    placeholder="Add or edit a standalone task"
+                />
+                <button onClick={handleAddOrEditStandaloneTask}>
+                    {editIndex !== null && folderEdit === null ? 'Update Task' : 'Add Task'}
+                </button>
+                <ul>
+                    {standaloneTasks.map((task, index) => (
+                        <li key={index} className="task-box">
+                            <div>{task}</div>
+                            <div className="task-buttons">
+                                <button onClick={() => { setTaskInput(task); setEditIndex(index); setFolderEdit(null); }}>Edit</button>
+                                <button onClick={() => handleDeleteStandaloneTask(index)}>Delete</button>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
 
-            <div>
+                {/* Folder Section */}
                 <h2>Create Folder</h2>
                 <input
                     type="text"
@@ -171,39 +128,38 @@ function Tasks() {
                     placeholder="Enter folder name"
                 />
                 <button onClick={handleCreateFolder}>Create Folder</button>
-            </div>
 
-            {folders.map((folder, folderIndex) => (
-                <div key={folderIndex}>
-                    <h2>{folder.name}</h2>
-                    <input
-                        type="text"
-                        value={folderTaskInputs[folderIndex] || ''} // Each folder has its own task input
-                        onChange={(e) => setFolderTaskInputs({ ...folderTaskInputs, [folderIndex]: e.target.value })}
-                        placeholder="Add or edit a task"
-                    />
-                    <button onClick={() => handleAddOrEditTaskInFolder(folderIndex)}>
-                        {editIndex !== null && folderEdit === folderIndex ? 'Update Task' : 'Add Task'}
-                    </button>
-                    <ul>
-                        {folder.tasks.map((task, taskIndex) => (
-                            <li key={taskIndex} style={{ textAlign: 'center' }}>
-                                <div>{task}</div>
-                                <div style={{ marginTop: '10px' }}>
-                                    <button onClick={() => handleEditTask(folderIndex, taskIndex)}>Edit</button>
-                                    <button onClick={() => handleDeleteTask(folderIndex, taskIndex)}>Delete</button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+                {folders.map((folder, folderIndex) => (
+                    <div key={folderIndex}>
+                        <h2>{folder.name}</h2>
+                        <input
+                            type="text"
+                            value={folderTaskInputs[folderIndex] || ''}
+                            onChange={(e) => setFolderTaskInputs({ ...folderTaskInputs, [folderIndex]: e.target.value })}
+                            placeholder="Add or edit a task"
+                        />
+                        <button onClick={() => handleAddOrEditTaskInFolder(folderIndex)}>
+                            {editIndex !== null && folderEdit === folderIndex ? 'Update Task' : 'Add Task'}
+                        </button>
+                        <ul>
+                            {folder.tasks.map((task, taskIndex) => (
+                                <li key={taskIndex} className="task-box">
+                                    <div>{task}</div>
+                                    <div className="task-buttons">
+                                        <button onClick={() => handleEditTask(folderIndex, taskIndex)}>Edit</button>
+                                        <button onClick={() => handleDeleteTask(folderIndex, taskIndex)}>Delete</button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
 
 export default Tasks;
-
 // import React, { useState } from 'react';
 
 // function Tasks() {
