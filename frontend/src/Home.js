@@ -18,7 +18,7 @@ function Home() {
     return (
         <div className="home-page">
             <h1>WELCOME!!!</h1>
-            <a href="/tasks">View and manage your tasks!</a>
+            <a href="/Tasks">View and manage your tasks!</a>
 
             {sections.map((section, index) => (
                 <div key={index} className="section">
@@ -27,7 +27,7 @@ function Home() {
                 </div>
             ))}
 
-            <a href="/signup">
+            <a href="/Signup">
                 <button className="btn-primary">Sign Up to Manage Tasks</button>
             </a>
         </div>

@@ -46,3 +46,5 @@ To contribute to this project:
 
 - **Known Issues:**
  - Our known issues is that our tasks and folders is not actually accessing our database. We have been trying our best to get this to be accessible but with little to no luck on the matter. We do have proof on our attempts and you can view that with the branch of "task-testing" though it is not truly working branch. To view this branch look at our github site at https://github.com/JadeC13/To-Do-List-P3/tree/task-testing. Our Logout also "works" but only in text and not in actuality. We have also been trying to figure that out as well. We will be posting our code now and our branches include all of our tried errors and issues of what we were trying to finish.
+ - The links on the home page that supposedly lead to the tasks route and the sign up route also do not work.
+ - Our deployed link with elastic beanstalk also seems to not 100% work too. It tends to crash every now and then when changing routes and doesn't seem to conenct to the database. I'm not sure why considering the code here on github which is the same, works as intended.
