@@ -45,7 +45,4 @@ To contribute to this project:
 ## Issues
 
 - **Known Issues:**
- - Our known issues is that our tasks and folders is not actually accessing our database. We have been trying our best to get this to be accessible but with little to no luck on the matter. We do have proof on our attempts and you can view that with the branch of "task-testing" though it is not truly working branch. To view this branch look at our github site at https://github.com/JadeC13/To-Do-List-P3 and then find the branch named "task-testing" to find it. Our Logout also "works" but only in text and not in actuality. We have also been trying to figure that out as well. We will be posting our code now and our branches include all of our tried errors and issues of what we were trying to finish. (https://github.com/JadeC13/To-Do-List-P3).
-
-- **Feature Requests:**
-  - None
+ - Our known issues is that our tasks and folders is not actually accessing our database. We have been trying our best to get this to be accessible but with little to no luck on the matter. We do have proof on our attempts and you can view that with the branch of "task-testing" though it is not truly working branch. To view this branch look at our github site at https://github.com/JadeC13/To-Do-List-P3 and then find the branch named "task-testing" to find it. Our Logout also "works" but only in text and not in actuality. We have also been trying to figure that out as well. We will be posting our code now and our branches include all of our tried errors and issues of what we were trying to finish.
